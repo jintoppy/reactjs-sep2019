@@ -1,26 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import Users from './components/Users';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+//Functional Component
+class App extends Component {
+  state = {
+    selectedUser: null,
+    users: [
+      { 
+        name: 'Ajith',
+        age: 30
+      },
+      { 
+        name: 'Vijay',
+        age: 20
+      }
+    ]
+  }
+  onUserSelect = (usr, evnt) => {
+    console.log(evnt);
+    this.setState({
+      selectedUser: usr
+    });
+  }
+  componentDidMount(){
+    console.log('mounted');
+  }
+  componentDidUpdate() {
+    console.log('updated');
+  }
+  shouldComponentUpdate(nextProps, nextState){    
+    return true;
+  }
+  render(){
+    console.log('inside render');
+    return (
+      <div id="my-app">
+        <Users 
+          users={this.state.users} 
+          selectedUser={this.state.selectedUser}
+          onUserSelect={this.onUserSelect}
+        />
+      </div>
+    );
+  }
+  
+};
+
+//Compose
+
 
 export default App;
