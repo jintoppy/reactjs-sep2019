@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Users from './components/Users';
+import AddUser from './components/AddUser';
 
 //Functional Component
 class App extends Component {
@@ -40,6 +41,7 @@ class App extends Component {
           selectedUser={this.state.selectedUser}
           onUserSelect={this.onUserSelect}
         />
+        <AddUser />
       </div>
     );
   }
