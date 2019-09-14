@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import Users from './components/Users';
 import AddUser from './components/AddUser';
 
@@ -6,16 +7,7 @@ import AddUser from './components/AddUser';
 class App extends Component {
   state = {
     selectedUser: null,
-    users: [
-      { 
-        name: 'Ajith',
-        age: 30
-      },
-      { 
-        name: 'Vijay',
-        age: 20
-      }
-    ]
+    users: []
   }
   onUserSelect = (usr, evnt) => {
     console.log(evnt);
@@ -23,8 +15,21 @@ class App extends Component {
       selectedUser: usr
     });
   }
+  onAddUser = (newUser) => {
+    const newUsers = [...this.state.users, newUser];
+    this.setState({
+      users: newUsers
+    });
+  }
   componentDidMount(){
     console.log('mounted');
+    const userPromise = axios.get('http://5cf909a3e3c79f001439b380.mockapi.io/api/users');
+    userPromise.then(res => {
+      this.setState({
+        users: res.data
+      });
+    });
+    
   }
   componentDidUpdate() {
     console.log('updated');
@@ -41,7 +46,7 @@ class App extends Component {
           selectedUser={this.state.selectedUser}
           onUserSelect={this.onUserSelect}
         />
-        <AddUser />
+        <AddUser onAddUser={this.onAddUser} />
       </div>
     );
   }

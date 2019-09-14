@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Users = ({ users, selectedUser, onUserSelect }) => {
-
+    
     const rows = users.map((usr, index) => {
         return (
             <tr key={index}>
@@ -36,6 +37,21 @@ const Users = ({ users, selectedUser, onUserSelect }) => {
             )}
         </div>
     )
+};
+
+Users.defaultProps = {
+    users: []
+};
+
+const selectedUserPropType = PropTypes.shape({
+    name: PropTypes.string,
+    age: PropTypes.number
+});
+
+Users.propTypes = {
+    users: PropTypes.arrayOf(selectedUserPropType).isRequired,
+    selectedUser: selectedUserPropType.isRequired,
+    onUserSelect: PropTypes.func.isRequired
 };
 
 export default Users;
