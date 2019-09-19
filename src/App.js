@@ -1,58 +1,33 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import Users from './components/Users';
-import AddUser from './components/AddUser';
+import { Route, Link, Switch } from "react-router-dom";
+import Home from './components/Home';
+import About from './components/About';
+import Contact from './components/Contact';
+import UserDetails from './components/UserDetails';
+
 
 //Functional Component
-class App extends Component {
-  state = {
-    selectedUser: null,
-    users: []
-  }
-  onUserSelect = (usr, evnt) => {
-    console.log(evnt);
-    this.setState({
-      selectedUser: usr
-    });
-  }
-  onAddUser = (newUser) => {
-    const newUsers = [...this.state.users, newUser];
-    this.setState({
-      users: newUsers
-    });
-  }
-  componentDidMount(){
-    console.log('mounted');
-    const userPromise = axios.get('http://5cf909a3e3c79f001439b380.mockapi.io/api/users');
-    userPromise.then(res => {
-      this.setState({
-        users: res.data
-      });
-    });
-    
-  }
-  componentDidUpdate() {
-    console.log('updated');
-  }
-  shouldComponentUpdate(nextProps, nextState){    
-    return true;
-  }
-  render(){
+const App = () => {
     console.log('inside render');
+    const aboutUrlDetails = {
+      pathname: '/about',
+      search: '?name=Jinto'
+    };
     return (
       <div id="my-app">
-        <Users 
-          users={this.state.users} 
-          selectedUser={this.state.selectedUser}
-          onUserSelect={this.onUserSelect}
-        />
-        <AddUser onAddUser={this.onAddUser} />
+        <Link to="/">Home</Link>
+        <Link to={aboutUrlDetails}>About</Link>
+        <Link to="/contact">Contact</Link>
+        <div>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/userdetails/:userId" component={UserDetails} />
+            <Route path="/about" component={About} />
+            <Route path="/contact" component={Contact} />
+        </div>
       </div>
     );
-  }
-  
 };
-
+  
 //Compose
 
 

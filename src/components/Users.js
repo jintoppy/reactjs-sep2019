@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-const Users = ({ users, selectedUser, onUserSelect }) => {
+const Users = ({ users }) => {
     
     const rows = users.map((usr, index) => {
         return (
@@ -9,7 +10,7 @@ const Users = ({ users, selectedUser, onUserSelect }) => {
                 <td>{usr.name}</td>
                 <td>{usr.age}</td>
                 <td>
-                    <button onClick={(evnt) => onUserSelect(usr, evnt)}>View</button>
+                    <Link to={`/userdetails/${usr.id}`}>View</Link>                    
                 </td>
             </tr>
         )
@@ -28,13 +29,7 @@ const Users = ({ users, selectedUser, onUserSelect }) => {
                 <tbody>
                     {rows}
                 </tbody>
-            </table>
-            {selectedUser && (<div>
-                <h3>Selected User Details</h3>
-                <p>Name is {selectedUser.name}</p>
-                <p>Age is {selectedUser.age}</p>
-                </div>
-            )}
+            </table>            
         </div>
     )
 };
@@ -49,9 +44,7 @@ const selectedUserPropType = PropTypes.shape({
 });
 
 Users.propTypes = {
-    users: PropTypes.arrayOf(selectedUserPropType).isRequired,
-    selectedUser: selectedUserPropType.isRequired,
-    onUserSelect: PropTypes.func.isRequired
+    users: PropTypes.arrayOf(selectedUserPropType).isRequired
 };
 
 export default Users;
